@@ -5,7 +5,8 @@ environment
 ===========
 
 set
-export ISL_HOME=
-export JAVA_HOME=
-export SCALA_HOME=
+
+1) export ISL_HOME=
+2) export JAVA_HOME=
+3) export SCALA_HOME=
 
