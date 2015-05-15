@@ -133,8 +133,13 @@ object ISL_sample extends App {
   println("-1 < 1 ? " + (neg_one < one) + " -1 == 1 ? " + (neg_one == one) + " infty == infty ? " + (infty == infty)
     + " infty == nan ? " + (infty == nan) + " nan == nan ??? " + (nan == nan))
 
-  println("printing values: -1: " + neg_one + " one: " + one + " zero: " + zero)
+  println("printing values: neg_one: " + neg_one + " one: " + one + " zero: " + zero)
 
-  //println("checking unary & binary ops: -1 + 1 == 0 ? " + (neg_one + one == zero) + " abs(-1) == 1 ? " + (neg_one.abs == one))
+  // println("checking unary & binary ops: -1 + 1 == 0 ? " + (neg_one + one == zero) + " abs(-1) == 1 ? " + (neg_one.abs == one))
+  println("checking unary & binary ops: -1 + 1: " + (neg_one + one))
+  println("printing values: neg_one: " + neg_one + " one: " + one + " zero: " + zero)
   println("checking unary & binary ops: abs(-1) == 1 ? " + (neg_one.abs == one))
+  println("printing values: neg_one: " + neg_one + " one: " + one + " zero: " + zero)
+  println("checking unary & binary ops: abs(-1) == 1 ? " + ((neg_one.abs) == one))
+  println("printing values: neg_one: " + neg_one + " one: " + one + " zero: " + zero)
 }

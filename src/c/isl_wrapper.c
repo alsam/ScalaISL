@@ -58,12 +58,6 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valNegOne
 (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_negone(ctx);
-    isl_printer *printer = isl_printer_to_file(ctx, stdout);
-    printf("-D- debugging valNegOne: val: ");
-    printer = isl_printer_print_val(printer, val);
-    printf("\n");
-    isl_printer_free(printer);
-
     return (long)val;
 }
 
@@ -212,16 +206,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valNE
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valAbs
   (JNIEnv *env, jobject obj, jlong lp) {
-    isl_val *ival = (isl_val*)lp;
+    isl_val *ival = isl_val_copy((isl_val*)lp);
     isl_val *oval = isl_val_abs(ival);
-    isl_ctx *ctx = isl_val_get_ctx(ival);
-    isl_printer *printer = isl_printer_to_file(ctx, stdout);
-    printf("-D- debugging valAbs: ival: ");
-    printer = isl_printer_print_val(printer, ival);
-    printf(" oval: ");
-    printer = isl_printer_print_val(printer, oval);
-    printf("\n");
-    isl_printer_free(printer);
     return (long)oval;
 }
 
@@ -232,7 +218,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valAbs
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valNeg
   (JNIEnv *env, jobject obj, jlong lp) {
-    isl_val *ival = (isl_val*)lp;
+    isl_val *ival = isl_val_copy((isl_val*)lp);
     isl_val *oval = isl_val_neg(ival);
     return (long)oval;
 }
@@ -292,9 +278,9 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valMax
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valAdd
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *ival1 = (isl_val*)lp1;
-    isl_val *ival2 = (isl_val*)lp2;
-    isl_val *oval = isl_val_add(ival1, ival2);
+    isl_val *ival1 = isl_val_copy((isl_val*)lp1);
+    isl_val *ival2 = isl_val_copy((isl_val*)lp2);
+    isl_val *oval  = isl_val_add(ival1, ival2);
     return (long)oval;
 }
 
@@ -305,9 +291,9 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valAdd
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valSub
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *ival1 = (isl_val*)lp1;
-    isl_val *ival2 = (isl_val*)lp2;
-    isl_val *oval = isl_val_sub(ival1, ival2);
+    isl_val *ival1 = isl_val_copy((isl_val*)lp1);
+    isl_val *ival2 = isl_val_copy((isl_val*)lp2);
+    isl_val *oval  = isl_val_sub(ival1, ival2);
     return (long)oval;
 }
 
