@@ -345,12 +345,15 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_createStrPrinter
  * Signature: (JJ)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_isl_ISL_printVal
-  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_printer *printer = (isl_printer*)lp1;
-    isl_val *val = (isl_val*)lp2;
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *val = (isl_val*)lp;
+    isl_ctx *ctx = isl_val_get_ctx(val);
+    isl_printer *printer = isl_printer_to_str(ctx);
     printer = isl_printer_print_val(printer, val);
     const char *str = isl_printer_get_str(printer);
-    return (*env)->NewStringUTF(env, str);
+    jstring retval = (*env)->NewStringUTF(env, str);
+    isl_printer_free(printer);
+    return retval;
 }
 
 

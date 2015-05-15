@@ -44,9 +44,8 @@ private[isl] class ISL {
   @native def valMul(v1: Long, v2: Long): Long
   @native def valDiv(v1: Long, v2: Long): Long
 
-    // printers for values
-  @native def createStrPrinter(ctx: Long): Long
-  @native def printVal(printer: Long, value: Long): String
+    // printer for values
+  @native def printVal(value: Long): String
 }
 
 // a singleton for keeping a single instance and context
@@ -54,7 +53,6 @@ object ISL {
   System.loadLibrary("isl_jni")
   val isl = new ISL
   val ctx = isl.createContext
-  val str_printer = isl.createStrPrinter(ctx)
 }
 
 case class ISL_context(ctx: Pointer)
@@ -90,7 +88,6 @@ private[isl] trait ISL_value_iface {
 case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   private val isl = ISL.isl
   private val ctx = ISL.ctx
-  private val printer = ISL.str_printer
 
   def zero     = ISL_value( Pointer(isl.valZero     (ctx)))
   def one      = ISL_value( Pointer(isl.valOne      (ctx)))
@@ -117,7 +114,7 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   def *      (that: ISL_value): ISL_value = ISL_value( Pointer(isl.valMul(value.ptr, that.value.ptr)))
   def /      (that: ISL_value): ISL_value = ISL_value( Pointer(isl.valDiv(value.ptr, that.value.ptr)))
 
-  override def toString = isl.printVal(printer, value.ptr)
+  override def toString = isl.printVal(value.ptr)
 }
 
 // --- Code in App body will get wrapped in a main method on compilation
