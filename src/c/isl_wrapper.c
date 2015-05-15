@@ -58,6 +58,12 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valNegOne
 (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_negone(ctx);
+    isl_printer *printer = isl_printer_to_file(ctx, stdout);
+    printf("-D- debugging valNegOne: val: ");
+    printer = isl_printer_print_val(printer, val);
+    printf("\n");
+    isl_printer_free(printer);
+
     return (long)val;
 }
 
@@ -198,4 +204,153 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valNE
     jboolean result = (jboolean)isl_val_ne(val1, val2);
     return result;
 }
+
+/*
+ * Class:     isl_ISL
+ * Method:    valAbs
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valAbs
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *ival = (isl_val*)lp;
+    isl_val *oval = isl_val_abs(ival);
+    isl_ctx *ctx = isl_val_get_ctx(ival);
+    isl_printer *printer = isl_printer_to_file(ctx, stdout);
+    printf("-D- debugging valAbs: ival: ");
+    printer = isl_printer_print_val(printer, ival);
+    printf(" oval: ");
+    printer = isl_printer_print_val(printer, oval);
+    printf("\n");
+    isl_printer_free(printer);
+    return (long)oval;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valNeg
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valNeg
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *ival = (isl_val*)lp;
+    isl_val *oval = isl_val_neg(ival);
+    return (long)oval;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valFloor
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valFloor
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    valCeil
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valCeil
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    valTrunc
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valTrunc
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    val2Exp
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_val2Exp
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    valMin
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valMin
+  (JNIEnv *, jobject, jlong, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    valMax
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valMax
+  (JNIEnv *, jobject, jlong, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    valAdd
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valAdd
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_val *ival1 = (isl_val*)lp1;
+    isl_val *ival2 = (isl_val*)lp2;
+    isl_val *oval = isl_val_add(ival1, ival2);
+    return (long)oval;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valSub
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valSub
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_val *ival1 = (isl_val*)lp1;
+    isl_val *ival2 = (isl_val*)lp2;
+    isl_val *oval = isl_val_sub(ival1, ival2);
+    return (long)oval;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valMul
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valMul
+  (JNIEnv *, jobject, jlong, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    valDiv
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_valDiv
+  (JNIEnv *, jobject, jlong, jlong);
+
+/*
+ * Class:     isl_ISL
+ * Method:    createStrPrinter
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_createStrPrinter
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_ctx *ctx = (isl_ctx*)lp;
+    isl_printer *p = isl_printer_to_str(ctx);
+    return (long)p;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    printVal
+ * Signature: (JJ)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_isl_ISL_printVal
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_printer *printer = (isl_printer*)lp1;
+    isl_val *val = (isl_val*)lp2;
+    printer = isl_printer_print_val(printer, val);
+    const char *str = isl_printer_get_str(printer);
+    return (*env)->NewStringUTF(env, str);
+}
+
 
