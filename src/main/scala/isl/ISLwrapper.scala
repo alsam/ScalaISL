@@ -22,6 +22,14 @@ private[isl] class ISL {
   @native def valIsZero(value: Long): Boolean
   @native def valIsOne(value: Long): Boolean
 
+    // binary properties defined on pairs of values
+  @native def valLT(v1: Long, v2: Long): Boolean
+  @native def valLE(v1: Long, v2: Long): Boolean
+  @native def valGT(v1: Long, v2: Long): Boolean
+  @native def valGE(v1: Long, v2: Long): Boolean
+  @native def valEQ(v1: Long, v2: Long): Boolean
+  @native def valNE(v1: Long, v2: Long): Boolean
+
 }
 
 // a singleton for keeping a single instance and context
@@ -42,8 +50,15 @@ private[isl] trait ISL_value_iface {
   def infty:    ISL_value
   def negInfty: ISL_value
 
-  def isZero (other: ISL_value): Boolean
-  def isOne  (other: ISL_value): Boolean
+  def isZero (that: ISL_value): Boolean
+  def isOne  (that: ISL_value): Boolean
+
+  def <      (that: ISL_value): Boolean
+  def <=     (that: ISL_value): Boolean
+  def >      (that: ISL_value): Boolean
+  def >=     (that: ISL_value): Boolean
+  def ==     (that: ISL_value): Boolean
+  def !=     (that: ISL_value): Boolean
 
 }
 
@@ -58,8 +73,15 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   def infty    = ISL_value( Pointer(isl.valInfty    (ctx)))
   def negInfty = ISL_value( Pointer(isl.valNegInfty (ctx)))
 
-  def isZero (other: ISL_value): Boolean = isl.valIsZero (other.value.ptr)
-  def isOne  (other: ISL_value): Boolean = isl.valIsOne  (other.value.ptr)
+  def isZero (that: ISL_value): Boolean = isl.valIsZero (that.value.ptr)
+  def isOne  (that: ISL_value): Boolean = isl.valIsOne  (that.value.ptr)
+
+  def <      (that: ISL_value): Boolean = isl.valLT(value.ptr, that.value.ptr)
+  def <=     (that: ISL_value): Boolean = isl.valLE(value.ptr, that.value.ptr)
+  def >      (that: ISL_value): Boolean = isl.valGT(value.ptr, that.value.ptr)
+  def >=     (that: ISL_value): Boolean = isl.valGE(value.ptr, that.value.ptr)
+  def ==     (that: ISL_value): Boolean = isl.valEQ(value.ptr, that.value.ptr)
+  def !=     (that: ISL_value): Boolean = isl.valNE(value.ptr, that.value.ptr)
 }
 
 // --- Code in App body will get wrapped in a main method on compilation
@@ -68,8 +90,13 @@ object ISL_sample extends App {
   // do something useful
   val isl_value = ISL_value()
   val zero = isl_value.zero
-  println("val is zero? " + isl_value.isZero(zero))
+  val one = isl_value.one
+  println("zero is zero? " + isl_value.isZero(zero) + " one is zero? " + isl_value.isZero(one))
 
   val neg_one = isl_value.negOne
-  val nan = isl_value.infty
+  val infty = isl_value.infty
+  val nan = isl_value.nan
+
+  println("-1 < 1 ? " + (neg_one < one) + " -1 == 1 ? " + (neg_one == one) + " infty == infty ? " + (infty == infty)
+    + " infty == nan ? " + (infty == nan) + " nan == nan ??? " + (nan == nan))
 }
