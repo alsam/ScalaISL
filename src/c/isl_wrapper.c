@@ -303,7 +303,12 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valSub
  * Signature: (JJ)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valMul
-  (JNIEnv *, jobject, jlong, jlong);
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_val *ival1 = isl_val_copy((isl_val*)lp1);
+    isl_val *ival2 = isl_val_copy((isl_val*)lp2);
+    isl_val *oval  = isl_val_mul(ival1, ival2);
+    return (long)oval;
+}
 
 /*
  * Class:     isl_ISL
@@ -311,18 +316,11 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valMul
  * Signature: (JJ)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valDiv
-  (JNIEnv *, jobject, jlong, jlong);
-
-/*
- * Class:     isl_ISL
- * Method:    createStrPrinter
- * Signature: (J)J
- */
-JNIEXPORT jlong JNICALL Java_isl_ISL_createStrPrinter
-  (JNIEnv *env, jobject obj, jlong lp) {
-    isl_ctx *ctx = (isl_ctx*)lp;
-    isl_printer *p = isl_printer_to_str(ctx);
-    return (long)p;
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_val *ival1 = isl_val_copy((isl_val*)lp1);
+    isl_val *ival2 = isl_val_copy((isl_val*)lp2);
+    isl_val *oval  = isl_val_div(ival1, ival2);
+    return (long)oval;
 }
 
 /*
