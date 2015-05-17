@@ -112,12 +112,14 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   private val isl = ISL.isl
   private val ctx = ISL.ctx
 
-  def zero     = ISL_value(isl.valZero     (ctx))
-  def one      = ISL_value(isl.valOne      (ctx))
-  def negOne   = ISL_value(isl.valNegOne   (ctx))
-  def nan      = ISL_value(isl.valNan      (ctx))
-  def infty    = ISL_value(isl.valInfty    (ctx))
-  def negInfty = ISL_value(isl.valNegInfty (ctx))
+  implicit def make(p: Long) = new ISL_value(p)
+
+  def zero     = isl.valZero     (ctx)
+  def one      = isl.valOne      (ctx)
+  def negOne   = isl.valNegOne   (ctx)
+  def nan      = isl.valNan      (ctx)
+  def infty    = isl.valInfty    (ctx)
+  def negInfty = isl.valNegInfty (ctx)
 
   def isZero      (that: ISL_value): Boolean = isl.valIsZero     (that.value)
   def isOne       (that: ISL_value): Boolean = isl.valIsOne      (that.value)
@@ -136,10 +138,10 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   def abs: ISL_value = ISL_value(isl.valAbs(value))
   def neg: ISL_value = ISL_value(isl.valNeg(value))
 
-  def +      (that: ISL_value): ISL_value = ISL_value(isl.valAdd(value, that.value))
-  def -      (that: ISL_value): ISL_value = ISL_value(isl.valSub(value, that.value))
-  def *      (that: ISL_value): ISL_value = ISL_value(isl.valMul(value, that.value))
-  def /      (that: ISL_value): ISL_value = ISL_value(isl.valDiv(value, that.value))
+  def +      (that: ISL_value): ISL_value = isl.valAdd(value, that.value)
+  def -      (that: ISL_value): ISL_value = isl.valSub(value, that.value)
+  def *      (that: ISL_value): ISL_value = isl.valMul(value, that.value)
+  def /      (that: ISL_value): ISL_value = isl.valDiv(value, that.value)
 
   override def toString = isl.printVal(value)
 }
@@ -152,7 +154,9 @@ case class ISL_id(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
   private val isl = ISL.isl
   private val ctx = ISL.ctx
 
-  def idAlloc(name: String, user: Pointer) = ISL_id(isl.idAlloc(ctx, name, user))
+  implicit def make(p: Long) = new ISL_id(p)
+
+  def idAlloc(name: String, user: Pointer) = isl.idAlloc(ctx, name, user)
 }
 
 private[isl] trait ISL_basic_set_iface {
