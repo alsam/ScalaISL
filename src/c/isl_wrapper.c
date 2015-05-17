@@ -1,6 +1,10 @@
 #include <jni.h>
 #include "isl/ctx.h"
 #include "isl/val.h"
+#include "isl/flow.h"
+#include "isl/constraint.h"
+#include "isl/set.h"
+#include "isl/map.h"
 #include "isl_ISL.h"
 
 /*
@@ -412,6 +416,20 @@ JNIEXPORT jstring JNICALL Java_isl_ISL_printVal
     jstring retval = (*env)->NewStringUTF(env, str);
     isl_printer_free(printer);
     return retval;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    idAlloc
+ * Signature: (JLjava/lang/String;J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_idAlloc
+  (JNIEnv *env, jobject obj, jlong lp1, jstring str, jlong lp2) {
+    isl_ctx *ctx = (isl_ctx*)lp1;
+    const char* name = (*env)->GetStringUTFChars(env, str, 0);
+    void *user = (void*)lp2;
+    isl_id *id = isl_id_alloc(ctx, name, user);
+    return (long)id;
 }
 
 

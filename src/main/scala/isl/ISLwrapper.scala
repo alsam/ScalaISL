@@ -53,6 +53,18 @@ private[isl] class ISL {
 
     // printer for values
   @native def printVal(value: Long): String
+
+  // ids
+  @native def idAlloc(ctx: Long, name: String, user: Long): Long
+
+  // spaces
+  @native def spaceAlloc(ctx: Long, nparam: Int, n_in: Int, n_out: Int): Long
+
+  // local spaces
+  @native def basicSetGetLocalSpace(set: Long): Long
+
+  // basic sets
+  @native def basicSetEmpty(space: Long): Long
 }
 
 // a singleton for keeping a single instance and context
@@ -130,6 +142,24 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   def /      (that: ISL_value): ISL_value = ISL_value(isl.valDiv(value, that.value))
 
   override def toString = isl.printVal(value)
+}
+
+private[isl] trait ISL_id_iface {
+  def idAlloc(name: String, user: Pointer): ISL_id
+}
+
+case class ISL_id(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
+  private val isl = ISL.isl
+  private val ctx = ISL.ctx
+
+  def idAlloc(name: String, user: Pointer) = ISL_id(isl.idAlloc(ctx, name, user))
+}
+
+private[isl] trait ISL_basic_set_iface {
+  // TODO: def empty: ISL_basic_set
+}
+
+case class ISL_basic_set(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
 }
 
 // --- Code in App body will get wrapped in a main method on compilation
