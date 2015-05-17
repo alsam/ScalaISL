@@ -254,6 +254,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valTrunc
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_val2Exp
   (JNIEnv *, jobject, jlong);
+}
 
 /*
  * Class:     isl_ISL
@@ -261,7 +262,12 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_val2Exp
  * Signature: (JJ)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valMin
-  (JNIEnv *, jobject, jlong, jlong);
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_val *ival1 = isl_val_copy((isl_val*)lp1);
+    isl_val *ival2 = isl_val_copy((isl_val*)lp2);
+    isl_val *oval  = isl_val_min(ival1, ival2);
+    return (long)oval;
+}
 
 /*
  * Class:     isl_ISL
@@ -269,7 +275,12 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valMin
  * Signature: (JJ)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valMax
-  (JNIEnv *, jobject, jlong, jlong);
+  (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
+    isl_val *ival1 = isl_val_copy((isl_val*)lp1);
+    isl_val *ival2 = isl_val_copy((isl_val*)lp2);
+    isl_val *oval  = isl_val_max(ival1, ival2);
+    return (long)oval;
+}
 
 /*
  * Class:     isl_ISL
