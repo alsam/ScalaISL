@@ -131,10 +131,13 @@ object ISL_sample extends App {
 
   val neg_one = isl_value.negOne
   val infty = isl_value.infty
+  val neg_infty = isl_value.negInfty
   val nan = isl_value.nan
 
   println("-1 < 1 ? " + (neg_one < one) + " -1 == 1 ? " + (neg_one == one) + " infty == infty ? " + (infty == infty)
     + " infty == nan ? " + (infty == nan) + " nan == nan ??? " + (nan == nan))
+
+  println("printing infty & nan: infty: " + infty + " neg_infty: " + neg_infty + " nan: " + nan)
 
   println("printing values: neg_one: " + neg_one + " one: " + one + " zero: " + zero)
 

@@ -128,8 +128,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsOne
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valLT
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *val1 = (isl_val*)lp1;
-    isl_val *val2 = (isl_val*)lp2;
+    isl_val *val1 = isl_val_copy((isl_val*)lp1);
+    isl_val *val2 = isl_val_copy((isl_val*)lp2);
     jboolean result = (jboolean)isl_val_lt(val1, val2);
     return result;
 }
@@ -141,8 +141,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valLT
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valLE
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *val1 = (isl_val*)lp1;
-    isl_val *val2 = (isl_val*)lp2;
+    isl_val *val1 = isl_val_copy((isl_val*)lp1);
+    isl_val *val2 = isl_val_copy((isl_val*)lp2);
     jboolean result = (jboolean)isl_val_le(val1, val2);
     return result;
 }
@@ -154,8 +154,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valLE
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valGT
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *val1 = (isl_val*)lp1;
-    isl_val *val2 = (isl_val*)lp2;
+    isl_val *val1 = isl_val_copy((isl_val*)lp1);
+    isl_val *val2 = isl_val_copy((isl_val*)lp2);
     jboolean result = (jboolean)isl_val_gt(val1, val2);
     return result;
 }
@@ -167,8 +167,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valGT
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valGE
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *val1 = (isl_val*)lp1;
-    isl_val *val2 = (isl_val*)lp2;
+    isl_val *val1 = isl_val_copy((isl_val*)lp1);
+    isl_val *val2 = isl_val_copy((isl_val*)lp2);
     jboolean result = (jboolean)isl_val_ge(val1, val2);
     return result;
 }
@@ -180,8 +180,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valGE
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valEQ
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *val1 = (isl_val*)lp1;
-    isl_val *val2 = (isl_val*)lp2;
+    isl_val *val1 = isl_val_copy((isl_val*)lp1);
+    isl_val *val2 = isl_val_copy((isl_val*)lp2);
     jboolean result = (jboolean)isl_val_eq(val1, val2);
     return result;
 }
@@ -193,8 +193,8 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valEQ
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valNE
   (JNIEnv *env, jobject obj, jlong lp1, jlong lp2) {
-    isl_val *val1 = (isl_val*)lp1;
-    isl_val *val2 = (isl_val*)lp2;
+    isl_val *val1 = isl_val_copy((isl_val*)lp1);
+    isl_val *val2 = isl_val_copy((isl_val*)lp2);
     jboolean result = (jboolean)isl_val_ne(val1, val2);
     return result;
 }
@@ -229,7 +229,11 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valNeg
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valFloor
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *ival = isl_val_copy((isl_val*)lp);
+    isl_val *oval = isl_val_floor(ival);
+    return (long)oval;
+}
 
 /*
  * Class:     isl_ISL
@@ -237,7 +241,11 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valFloor
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valCeil
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *ival = isl_val_copy((isl_val*)lp);
+    isl_val *oval = isl_val_ceil(ival);
+    return (long)oval;
+}
 
 /*
  * Class:     isl_ISL
@@ -245,7 +253,11 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valCeil
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valTrunc
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *ival = isl_val_copy((isl_val*)lp);
+    isl_val *oval = isl_val_trunc(ival);
+    return (long)oval;
+}
 
 /*
  * Class:     isl_ISL
@@ -253,7 +265,10 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valTrunc
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_val2Exp
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *ival = isl_val_copy((isl_val*)lp);
+    isl_val *oval = isl_val_2exp(ival);
+    return (long)oval;
 }
 
 /*
