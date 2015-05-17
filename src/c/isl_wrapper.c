@@ -9,7 +9,7 @@
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_createContext
-(JNIEnv *env, jobject obj) {
+  (JNIEnv *env, jobject obj) {
     isl_ctx *ctx = isl_ctx_alloc();
     return (long)ctx;
 }
@@ -31,7 +31,7 @@ JNIEXPORT void JNICALL Java_isl_ISL_releaseContext
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valZero
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_zero(ctx);
     return (long)val;
@@ -43,7 +43,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valZero
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valOne
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_one(ctx);
     return (long)val;
@@ -55,7 +55,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valOne
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valNegOne
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_negone(ctx);
     return (long)val;
@@ -67,7 +67,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valNegOne
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valNan
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_nan(ctx);
     return (long)val;
@@ -79,7 +79,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valNan
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valInfty
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_infty(ctx);
     return (long)val;
@@ -91,7 +91,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valInfty
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_isl_ISL_valNegInfty
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_ctx *ctx = (isl_ctx*)lp;
     isl_val *val = isl_val_neginfty(ctx);
     return (long)val;
@@ -103,7 +103,7 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_valNegInfty
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsZero
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_val *val = (isl_val*)lp;
     jboolean result = (jboolean)isl_val_is_zero(val);
     return result;
@@ -115,9 +115,57 @@ JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsZero
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsOne
-(JNIEnv *env, jobject obj, jlong lp) {
+  (JNIEnv *env, jobject obj, jlong lp) {
     isl_val *val = (isl_val*)lp;
     jboolean result = (jboolean)isl_val_is_one(val);
+    return result;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valIsNegOne
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsNegOne
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *val = (isl_val*)lp;
+    jboolean result = (jboolean)isl_val_is_negone(val);
+    return result;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valIsNan
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsNan
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *val = (isl_val*)lp;
+    jboolean result = (jboolean)isl_val_is_nan(val);
+    return result;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valIsInfty
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsInfty
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *val = (isl_val*)lp;
+    jboolean result = (jboolean)isl_val_is_infty(val);
+    return result;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    valIsNegInfty
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_isl_ISL_valIsNegInfty
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_val *val = (isl_val*)lp;
+    jboolean result = (jboolean)isl_val_is_neginfty(val);
     return result;
 }
 

@@ -21,8 +21,9 @@ class ValuesSuite extends FunSuite {
     val infty = isl_value.infty
     val nan = isl_value.nan
     assert(!(nan == nan) && !(nan != nan)) // the property of NANs
-    //assert((infty * zero) == nan) // FIXME use is_nan
-    //assert((neg_infty + infty) == nan)
-    //assert((one / zero) == infty)
+    assert(isl_value.isNan(infty * zero))
+    assert(isl_value.isNan(neg_infty + infty))
+    assert(isl_value.isNan(one / zero)) // ???
+    assert(!isl_value.isInfty(one / zero)) // ???
   }
 }

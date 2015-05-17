@@ -22,6 +22,10 @@ private[isl] class ISL {
     // queries
   @native def valIsZero(value: Long): Boolean
   @native def valIsOne(value: Long): Boolean
+  @native def valIsNegOne(value: Long): Boolean
+  @native def valIsNan(value: Long): Boolean
+  @native def valIsInfty(value: Long): Boolean
+  @native def valIsNegInfty(value: Long): Boolean
 
     // binary properties defined on pairs of values
   @native def valLT(v1: Long, v2: Long): Boolean
@@ -67,8 +71,12 @@ private[isl] trait ISL_value_iface {
   def infty:    ISL_value
   def negInfty: ISL_value
 
-  def isZero (that: ISL_value): Boolean
-  def isOne  (that: ISL_value): Boolean
+  def isZero      (that: ISL_value): Boolean
+  def isOne       (that: ISL_value): Boolean
+  def isNegOne    (that: ISL_value): Boolean
+  def isNan       (that: ISL_value): Boolean
+  def isInfty     (that: ISL_value): Boolean
+  def isNegInfty  (that: ISL_value): Boolean
 
   def <      (that: ISL_value): Boolean
   def <=     (that: ISL_value): Boolean
@@ -99,8 +107,12 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   def infty    = ISL_value(isl.valInfty    (ctx))
   def negInfty = ISL_value(isl.valNegInfty (ctx))
 
-  def isZero (that: ISL_value): Boolean = isl.valIsZero (that.value)
-  def isOne  (that: ISL_value): Boolean = isl.valIsOne  (that.value)
+  def isZero      (that: ISL_value): Boolean = isl.valIsZero     (that.value)
+  def isOne       (that: ISL_value): Boolean = isl.valIsOne      (that.value)
+  def isNegOne    (that: ISL_value): Boolean = isl.valIsNegOne   (that.value)
+  def isNan       (that: ISL_value): Boolean = isl.valIsNan      (that.value)
+  def isInfty     (that: ISL_value): Boolean = isl.valIsInfty    (that.value)
+  def isNegInfty  (that: ISL_value): Boolean = isl.valIsNegInfty (that.value)
 
   def <      (that: ISL_value): Boolean = isl.valLT(value, that.value)
   def <=     (that: ISL_value): Boolean = isl.valLE(value, that.value)
