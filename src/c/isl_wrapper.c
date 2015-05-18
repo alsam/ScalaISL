@@ -453,3 +453,27 @@ JNIEXPORT jstring JNICALL Java_isl_ISL_idGetName
 JNIEXPORT jlong JNICALL Java_isl_ISL_idGetUser
   (JNIEnv *env, jobject obj, jlong lp);
 
+/*
+ * Class:     isl_ISL
+ * Method:    spaceAlloc
+ * Signature: (JIII)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_spaceAlloc
+  (JNIEnv *env, jobject obj, jlong lp, jint nparam, jint n_in, jint n_out) {
+    isl_ctx *ctx = (isl_ctx*)lp;
+    isl_space *space = isl_space_alloc(ctx, nparam, n_in, n_out);
+    return (long)space;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    spaceSetAlloc
+ * Signature: (JII)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_spaceSetAlloc
+  (JNIEnv *env, jobject obj, jlong lp, jint nparam, jint dim) {
+    isl_ctx *ctx = (isl_ctx*)lp;
+    isl_space *space = isl_space_set_alloc(ctx, nparam, dim);
+    return (long)space;
+}
+

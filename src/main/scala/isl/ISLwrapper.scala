@@ -61,6 +61,7 @@ private[isl] class ISL {
 
   // spaces
   @native def spaceAlloc(ctx: Long, nparam: Int, n_in: Int, n_out: Int): Long
+  @native def spaceSetAlloc(ctx: Long, nparam: Int, ndim: Int): Long
 
   // local spaces
   @native def basicSetGetLocalSpace(set: Long): Long
