@@ -432,4 +432,24 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_idAlloc
     return (long)id;
 }
 
+/*
+ * Class:     isl_ISL
+ * Method:    idGetName
+ * Signature: (J)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_isl_ISL_idGetName
+  (JNIEnv *env, jobject obj, jlong lp) {
+    isl_id *id = (isl_id*)lp;
+    const char* name = isl_id_get_name(id);
+    jstring retval = (*env)->NewStringUTF(env, name);
+    return retval;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    idGetUser
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_idGetUser
+  (JNIEnv *env, jobject obj, jlong lp);
 

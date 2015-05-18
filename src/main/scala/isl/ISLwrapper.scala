@@ -56,6 +56,8 @@ private[isl] class ISL {
 
   // ids
   @native def idAlloc(ctx: Long, name: String, user: Long): Long
+  @native def idGetName(id: Long): String
+  @native def idGetUser(id: Long): Long
 
   // spaces
   @native def spaceAlloc(ctx: Long, nparam: Int, n_in: Int, n_out: Int): Long
@@ -148,6 +150,8 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
 
 private[isl] trait ISL_id_iface {
   def idAlloc(name: String, user: Pointer): ISL_id
+  def getName: String
+  def getUser: Pointer
 }
 
 case class ISL_id(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
@@ -156,7 +160,9 @@ case class ISL_id(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
 
   implicit def make(p: Long) = new ISL_id(p)
 
-  def idAlloc(name: String, user: Pointer) = isl.idAlloc(ctx, name, user)
+  def idAlloc(name: String, user: Pointer): ISL_id = isl.idAlloc(ctx, name, user)
+  def getName = isl.idGetName(value)
+  def getUser = isl.idGetUser(value)
 }
 
 private[isl] trait ISL_basic_set_iface {

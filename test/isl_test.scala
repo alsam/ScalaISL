@@ -26,4 +26,11 @@ class ValuesSuite extends FunSuite {
     assert(isl_value.isNan(one / zero)) // ???
     assert(!isl_value.isInfty(one / zero)) // ???
   }
+
+  test("id: `getName`") {
+    val id = ISL_id()
+    val name = "ida"
+    val ida = id.idAlloc(name, 0L)
+    assert(ida.getName == name)
+  }
 }
