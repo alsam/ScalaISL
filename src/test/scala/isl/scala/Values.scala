@@ -1,5 +1,6 @@
+package isl
+
 import org.scalatest.FunSuite
-import isl._
 
 class ValuesSuite extends FunSuite {
 
@@ -27,10 +28,4 @@ class ValuesSuite extends FunSuite {
     assert(!isl_value.isInfty(one / zero)) // ???
   }
 
-  test("id: `getName`") {
-    val id = Identifier()
-    val name = "ida"
-    val ida = id.idAlloc(name, 0L)
-    assert(ida.getName == name)
-  }
 }
