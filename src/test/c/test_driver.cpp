@@ -23,8 +23,8 @@ int main()
   set1 = isl_basic_set_read_from_str(ctx, affine_formula_string.c_str());
   // The ISL will apply Fourier-Motzkin method automatically, to eliminate existential variables
   // set the output format to be ISL format
-  isl_printer_set_output_format(printer , ISL_FORMAT_ISL);
-  isl_printer_print_basic_set(printer ,set1);
+  isl_printer_set_output_format(printer, ISL_FORMAT_ISL);
+  isl_printer_print_basic_set(printer, set1);
   char *isl_set_str=isl_printer_get_str(printer);
   affine_formula_string = isl_set_str;
   isl_printer_flush(printer);
