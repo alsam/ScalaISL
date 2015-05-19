@@ -149,19 +149,19 @@ case class Value(value: Pointer = Pointer(0L)) extends ValueIface {
   override def toString = isl.printVal(value)
 }
 
-private[isl] trait ISL_id_iface {
-  def idAlloc(name: String, user: Pointer): ISL_id
+private[isl] trait IdentifierIface {
+  def idAlloc(name: String, user: Pointer): Identifier
   def getName: String
   def getUser: Pointer
 }
 
-case class ISL_id(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
+case class Identifier(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
   private val isl = ISL.isl
   private val ctx = ISL.ctx
 
-  implicit def make(p: Long) = new ISL_id(p)
+  implicit def make(p: Long) = new Identifier(p)
 
-  def idAlloc(name: String, user: Pointer): ISL_id = isl.idAlloc(ctx, name, user)
+  def idAlloc(name: String, user: Pointer): Identifier = isl.idAlloc(ctx, name, user)
   def getName = isl.idGetName(value)
   def getUser = isl.idGetUser(value)
 }

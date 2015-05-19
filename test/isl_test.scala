@@ -28,7 +28,7 @@ class ValuesSuite extends FunSuite {
   }
 
   test("id: `getName`") {
-    val id = ISL_id()
+    val id = Identifier()
     val name = "ida"
     val ida = id.idAlloc(name, 0L)
     assert(ida.getName == name)
