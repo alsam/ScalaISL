@@ -3,7 +3,7 @@ import isl._
 
 class ValuesSuite extends FunSuite {
 
-  private val isl_value = ISL_value()
+  private val isl_value = Value()
 
   test("val: `zero`, `negOne`, and `one`") {
     val zero = isl_value.zero

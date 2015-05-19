@@ -77,45 +77,45 @@ object ISL {
   val ctx = isl.createContext
 }
 
-private[isl] trait ISL_value_iface {
+private[isl] trait ValueIface {
 
-  def zero:     ISL_value
-  def one:      ISL_value
-  def negOne:   ISL_value
-  def nan:      ISL_value
-  def infty:    ISL_value
-  def negInfty: ISL_value
+  def zero:     Value
+  def one:      Value
+  def negOne:   Value
+  def nan:      Value
+  def infty:    Value
+  def negInfty: Value
 
-  def isZero      (that: ISL_value): Boolean
-  def isOne       (that: ISL_value): Boolean
-  def isNegOne    (that: ISL_value): Boolean
-  def isNan       (that: ISL_value): Boolean
-  def isInfty     (that: ISL_value): Boolean
-  def isNegInfty  (that: ISL_value): Boolean
+  def isZero      (that: Value): Boolean
+  def isOne       (that: Value): Boolean
+  def isNegOne    (that: Value): Boolean
+  def isNan       (that: Value): Boolean
+  def isInfty     (that: Value): Boolean
+  def isNegInfty  (that: Value): Boolean
 
-  def <      (that: ISL_value): Boolean
-  def <=     (that: ISL_value): Boolean
-  def >      (that: ISL_value): Boolean
-  def >=     (that: ISL_value): Boolean
-  def ==     (that: ISL_value): Boolean
-  def !=     (that: ISL_value): Boolean
+  def <      (that: Value): Boolean
+  def <=     (that: Value): Boolean
+  def >      (that: Value): Boolean
+  def >=     (that: Value): Boolean
+  def ==     (that: Value): Boolean
+  def !=     (that: Value): Boolean
   
-  def abs: ISL_value
-  def neg: ISL_value
+  def abs: Value
+  def neg: Value
 
-  def +      (that: ISL_value): ISL_value
-  def -      (that: ISL_value): ISL_value
-  def *      (that: ISL_value): ISL_value
-  def /      (that: ISL_value): ISL_value
+  def +      (that: Value): Value
+  def -      (that: Value): Value
+  def *      (that: Value): Value
+  def /      (that: Value): Value
 }
 
 import Implicits._
-case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
+case class Value(value: Pointer = Pointer(0L)) extends ValueIface {
 
   private val isl = ISL.isl
   private val ctx = ISL.ctx
 
-  implicit def make(p: Long) = new ISL_value(p)
+  implicit def make(p: Long) = new Value(p)
 
   def zero     = isl.valZero     (ctx)
   def one      = isl.valOne      (ctx)
@@ -124,27 +124,27 @@ case class ISL_value(value: Pointer = Pointer(0L)) extends ISL_value_iface {
   def infty    = isl.valInfty    (ctx)
   def negInfty = isl.valNegInfty (ctx)
 
-  def isZero      (that: ISL_value): Boolean = isl.valIsZero     (that.value)
-  def isOne       (that: ISL_value): Boolean = isl.valIsOne      (that.value)
-  def isNegOne    (that: ISL_value): Boolean = isl.valIsNegOne   (that.value)
-  def isNan       (that: ISL_value): Boolean = isl.valIsNan      (that.value)
-  def isInfty     (that: ISL_value): Boolean = isl.valIsInfty    (that.value)
-  def isNegInfty  (that: ISL_value): Boolean = isl.valIsNegInfty (that.value)
+  def isZero      (that: Value): Boolean = isl.valIsZero     (that.value)
+  def isOne       (that: Value): Boolean = isl.valIsOne      (that.value)
+  def isNegOne    (that: Value): Boolean = isl.valIsNegOne   (that.value)
+  def isNan       (that: Value): Boolean = isl.valIsNan      (that.value)
+  def isInfty     (that: Value): Boolean = isl.valIsInfty    (that.value)
+  def isNegInfty  (that: Value): Boolean = isl.valIsNegInfty (that.value)
 
-  def <      (that: ISL_value): Boolean = isl.valLT(value, that.value)
-  def <=     (that: ISL_value): Boolean = isl.valLE(value, that.value)
-  def >      (that: ISL_value): Boolean = isl.valGT(value, that.value)
-  def >=     (that: ISL_value): Boolean = isl.valGE(value, that.value)
-  def ==     (that: ISL_value): Boolean = isl.valEQ(value, that.value)
-  def !=     (that: ISL_value): Boolean = isl.valNE(value, that.value)
+  def <      (that: Value): Boolean = isl.valLT(value, that.value)
+  def <=     (that: Value): Boolean = isl.valLE(value, that.value)
+  def >      (that: Value): Boolean = isl.valGT(value, that.value)
+  def >=     (that: Value): Boolean = isl.valGE(value, that.value)
+  def ==     (that: Value): Boolean = isl.valEQ(value, that.value)
+  def !=     (that: Value): Boolean = isl.valNE(value, that.value)
 
-  def abs: ISL_value = ISL_value(isl.valAbs(value))
-  def neg: ISL_value = ISL_value(isl.valNeg(value))
+  def abs: Value = Value(isl.valAbs(value))
+  def neg: Value = Value(isl.valNeg(value))
 
-  def +      (that: ISL_value): ISL_value = isl.valAdd(value, that.value)
-  def -      (that: ISL_value): ISL_value = isl.valSub(value, that.value)
-  def *      (that: ISL_value): ISL_value = isl.valMul(value, that.value)
-  def /      (that: ISL_value): ISL_value = isl.valDiv(value, that.value)
+  def +      (that: Value): Value = isl.valAdd(value, that.value)
+  def -      (that: Value): Value = isl.valSub(value, that.value)
+  def *      (that: Value): Value = isl.valMul(value, that.value)
+  def /      (that: Value): Value = isl.valDiv(value, that.value)
 
   override def toString = isl.printVal(value)
 }
@@ -177,7 +177,7 @@ case class ISL_basic_set(value: Pointer = Pointer(0L)) extends ISL_basic_set_ifa
 object ISL_sample extends App {
 
   // do something useful
-  val isl_value = ISL_value()
+  val isl_value = Value()
   val zero = isl_value.zero
   val one = isl_value.one
   println("zero is zero? " + isl_value.isZero(zero) + " one is zero? " + isl_value.isZero(one))
