@@ -155,22 +155,28 @@ private[isl] trait IdentifierIface {
   def getUser: Pointer
 }
 
-case class Identifier(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
+case class Identifier(ident: Pointer = Pointer(0L)) extends IdentifierIface {
   private val isl = ISL.isl
   private val ctx = ISL.ctx
 
   implicit def make(p: Long) = new Identifier(p)
 
   def idAlloc(name: String, user: Pointer): Identifier = isl.idAlloc(ctx, name, user)
-  def getName = isl.idGetName(value)
-  def getUser = isl.idGetUser(value)
+  def getName = isl.idGetName(ident)
+  def getUser = isl.idGetUser(ident)
 }
 
-private[isl] trait ISL_basic_set_iface {
-  // TODO: def empty: ISL_basic_set
+private[isl] trait BasicSetIface {
+  def empty: BasicSet
 }
 
-case class ISL_basic_set(value: Pointer = Pointer(0L)) extends ISL_basic_set_iface {
+case class BasicSet(space: Pointer = Pointer(0L)) extends BasicSetIface {
+  private val isl = ISL.isl
+  private val ctx = ISL.ctx
+
+  implicit def make(p: Long) = new BasicSet(p)
+
+  def empty = isl.basicSetEmpty(space)
 }
 
 // --- Code in App body will get wrapped in a main method on compilation
