@@ -138,8 +138,8 @@ case class Value(value: Pointer = Pointer(0L)) extends ValueIface {
   def ==     (that: Value): Boolean = isl.valEQ(value, that.value)
   def !=     (that: Value): Boolean = isl.valNE(value, that.value)
 
-  def abs: Value = Value(isl.valAbs(value))
-  def neg: Value = Value(isl.valNeg(value))
+  def abs: Value = isl.valAbs(value)
+  def neg: Value = isl.valNeg(value)
 
   def +      (that: Value): Value = isl.valAdd(value, that.value)
   def -      (that: Value): Value = isl.valSub(value, that.value)
