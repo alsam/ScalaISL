@@ -68,6 +68,7 @@ private[isl] class ISL {
 
   // basic sets
   @native def basicSetEmpty(space: Long): Long
+  @native def basicSetUniverse(space: Long): Long
 }
 
 // a singleton for keeping a single instance and context

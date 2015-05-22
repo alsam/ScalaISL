@@ -477,3 +477,39 @@ JNIEXPORT jlong JNICALL Java_isl_ISL_spaceSetAlloc
     return (long)space;
 }
 
+/*
+ * Class:     isl_ISL
+ * Method:    basicSetGetLocalSpace
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_basicSetGetLocalSpace
+  (JNIEnv *env, jobject obj, jlong lp) {
+  isl_basic_set *basic_set = (isl_basic_set*)lp;
+  isl_local_space *local_space = isl_basic_set_get_local_space(basic_set);
+  return (long)local_space;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    basicSetEmpty
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_basicSetEmpty
+  (JNIEnv *env, jobject obj, jlong lp) {
+  isl_space *space = (isl_space*)lp;
+  isl_basic_set *basic_set = isl_basic_set_empty(space);
+  return (long)basic_set;
+}
+
+/*
+ * Class:     isl_ISL
+ * Method:    basicSetUniverse
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_isl_ISL_basicSetUniverse
+  (JNIEnv *env, jobject obj, jlong lp) {
+  isl_space *space = (isl_space*)lp;
+  isl_basic_set *basic_set = isl_basic_set_universe(space);
+  return (long)basic_set;
+}
+
